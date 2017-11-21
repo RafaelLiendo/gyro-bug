@@ -7,8 +7,31 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <div *ngIf="acceleration$ | async as acceleration; else loading">
+    <pre>{{acceleration | json}}</pre>
+    <p>Ok, so DeviceMotion is working!</p>
+    <p>Now let's try oppening some content that requires it.</p>
+
+    <ion-list radio-group [(ngModel)]="url">
+      <ion-item>
+        <ion-label>Interative 360 Site</ion-label>
+        <ion-radio value="http://floripavip.com.br"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Another Interative 360 Site</ion-label>
+        <ion-radio value="https://www.thinglink.com/mediacard/837973915576827905"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Youtube 360</ion-label>
+        <ion-radio value="https://www.youtube.com/embed/-xNN-bJQ4vI"></ion-radio>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button (click)="openWithSystemBrowser(url)">Open with with System Browser</button>
+    <button ion-button (click)="openWithInAppBrowser(url)" color="danger">Open with with In App Browser</button>
+    <button ion-button (click)="openWithIframe(url)" color="danger">Open with &lt;iframe&gt;</button>
+
+  </div>
+
+  <ng-template #loading>Waiting DeviceMotion...</ng-template>
 </ion-content>
